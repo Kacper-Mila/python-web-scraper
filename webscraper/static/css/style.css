@@ -19,3 +19,32 @@ body {
     background-color: var(--Heavy-Purple);
     color: var(--Freeze-Purple);
 }
+
+.nav-navbar {
+    background-color: var(--Freeze-Purple);
+}
+
+.button-container>ul>li {
+    height: 2.2rem;
+    border-left: 1px solid var(--Ice-Cold);
+}
+
+.search-button {
+    background-color: var(--Freeze-Purple);
+    color: var(--Purple-Pain);
+    border: 1px solid var(--Purple-Pain);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.search-button:hover {
+    transition: color 0.3s, background-color 0.3s;
+    background-color: var(--Purple-Pain);
+    color: var(--Freeze-Purple);
+}
