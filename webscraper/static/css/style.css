@@ -13,8 +13,16 @@ body {
     background-color: var(--Heavy-Purple);
 }
 
+.accent-color {
+    color: var(--Purple-Pain);
+}
+
+.background-freeze {
+    background-color: var(--Freeze-Purple);
+}
+
 .wrapper {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     background-color: var(--Heavy-Purple);
     color: var(--Freeze-Purple);
@@ -47,4 +55,23 @@ body {
     transition: color 0.3s, background-color 0.3s;
     background-color: var(--Purple-Pain);
     color: var(--Freeze-Purple);
+}
+
+.item-description {
+    background-color: var(--Freeze-Purple);
+    color: black;
+}
+
+.item-opinion {
+    background-color: var(--Medium-Purple);
+    color: black;
+
+}
+
+.recomendation-ok {
+    color: var(--Purple-Pain);
+}
+
+.recomendation-not-ok {
+    color: var(--Ice-Cold);
 }

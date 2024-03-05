@@ -12,5 +12,11 @@ def scrape():
     args = request.args
     productid = args.get("productid")
     print(f"args: {args} productid: {productid}")
-    product_data = scraper.scrape(productid)
-    return render_template("scrape.html", product_data=product_data, productid=productid)
+    product_dict = scraper.scrape(productid)
+
+    if isinstance(product_dict, Exception):
+        return render_template("error.html")
+        
+    return render_template(
+        "scrape.html", product_dict=product_dict, productid=productid
+    )
