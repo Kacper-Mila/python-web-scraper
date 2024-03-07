@@ -39,9 +39,9 @@
     </div>
 
     <div class="filter container background-freeze rounded-4 w-100 text-black-50 py-2 shadow">
-        <div class="container d-flex justify-content-around">
+        <div class="container d-flex flex-column d-sm-flex justify-content-around">
             <div class="col-md-2 d-flex align-items-center">
-                <a href="/product-charts"><button type="submit" class="download-button">View charts</button></a>
+                <a href="/product-charts?productid={{ product.productid }}"><button type="submit" class="download-button">View charts</button></a>
             </div>
             <div class="col-md-3 d-flex align-items-center">
                 <form method="GET" class="d-flex">
@@ -51,7 +51,7 @@
                         <option value="highest">Highest Rating</option>
                         <option value="lowest">Lowest Rating</option>
                     </select>
-                    <button type="submit" class="download-button">Apply</button>
+                    <button type="submit" class="download-button">Sort</button>
                 </form>
             </div>
             <div class="col-md-3 d-flex align-items-center">

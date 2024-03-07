@@ -1,4 +1,4 @@
-from webscraper import app, scraper, download_product, sort_opinions
+from webscraper import app, scraper, download_product, sort_opinions, database_handler
 from flask import render_template, request, send_file
 
 
@@ -42,3 +42,10 @@ def download():
         return render_template("error.html", error=file)
     
     return send_file(file, as_attachment=True)
+
+@app.route("/product-charts", methods=["GET"])
+def product_charts():
+    args = request.args
+    productid = args.get("productid")
+    product = database_handler.get_product(productid)
+    return render_template("product-charts.html", product=product)

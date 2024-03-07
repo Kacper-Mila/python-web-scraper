@@ -11,6 +11,7 @@ body {
     margin: 0;
     color: var(--Freeze-Purple);
     background-color: var(--Heavy-Purple);
+    height: 100vh;
 }
 
 .accent-color {
@@ -22,7 +23,7 @@ body {
 }
 
 .wrapper {
-    min-height: 100vh;
+    min-height: calc(100vh - 152px);
     width: 100%;
     background-color: var(--Heavy-Purple);
     color: var(--Freeze-Purple);
@@ -35,6 +36,13 @@ body {
 .button-container>ul>li {
     height: 2.2rem;
     border-left: 1px solid var(--Ice-Cold);
+}
+
+.button-container>ul>li :hover {
+    transition: color 0.3s, background-color 0.3s;
+    transition: text 0.3s;
+    text-decoration: underline var(--Purple-Pain);
+    text-underline-offset: 5px;
 }
 
 .search-button {
@@ -93,4 +101,8 @@ body {
 .download-button:hover {
     transition: color 0.3s, background-color 0.3s;
     background-color: #7d45ba
+}
+
+.footer-links {
+    
 }

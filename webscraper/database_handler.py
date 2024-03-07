@@ -90,6 +90,10 @@ def remove_product_from_database(productid: str):
         db.session.commit()
 
 
+def get_product(productid: str) -> Product:
+    return Product.query.get(productid)
+
+
 def is_same_opinion(opinion1: Opinion, opinion2: Opinion) -> bool:
     return (
         opinion1.author == opinion2.author
