@@ -278,4 +278,9 @@ pyrightconfig.json
 .history
 .ionide
 
+# Generated files
+*.csv
+*.xlsx
+*.json
+
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,visualstudiocode

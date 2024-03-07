@@ -1,23 +1,35 @@
 import csv
 import json
-from webscraper.database_handler import Product, Opinion
+import openpyxl
+import os
+from webscraper.database_handler import Opinion
 
 
 def download(file_type, productid):
-    if file_type == "csv":
-        return generate_csv(productid)
-    elif file_type == "json":
-        return generate_json(productid)
-    elif file_type == "xlsx":
-        return generate_xlsx(productid)
-    else:
-        return None
-
-
-def generate_csv(productid):
     opinions = Opinion.query.filter_by(productid=productid).all()
+    if productid == '':
+        productid = "product"
+    
+    try:
+        print("inside download")
+        print(file_type, productid)
+        if file_type == "csv":
+            return generate_csv(opinions, productid)
+        elif file_type == "json":
+            return generate_json(opinions, productid)
+        elif file_type == "xlsx":
+            return generate_xlsx(opinions, productid)
+        else:
+            raise Exception("invalid file type")
+    except Exception as e:
+        print(e)
+        return e
 
-    with open("product_opinions.csv", "w", newline="") as file:
+
+def generate_csv(opinions, productid):
+    file_path = os.path.join(os.getcwd(), f"{productid}.csv")
+
+    with open(file_path, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["author", "recommendaton", "stars", "content", "pros", "cons"])
 
@@ -33,13 +45,13 @@ def generate_csv(productid):
                 ]
             )
 
-    return "product_opinions.csv"
+    return file_path
 
 
-def generate_json(productid):
-    opinions = Opinion.query.filter_by(productid=productid).all()
+def generate_json(opinions, productid):
+    file_path = os.path.join(os.getcwd(), f"{productid}.json")
 
-    with open("product_opinions.json", "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         products_list = []
         for opinion in opinions:
             opinion_dict = {
@@ -51,16 +63,13 @@ def generate_json(productid):
                 "cons": opinion.cons,
             }
             products_list.append(opinion_dict)
-        json.dump(products_list, file, indent=4)
+        json.dump(products_list, file, ensure_ascii=False, indent=4)
 
-    return "product_opinions.json"
+    return file_path
 
 
-def generate_xlsx(productid):
-    opinions = Opinion.query.filter_by(productid=productid).all()
-
-    import openpyxl
-
+def generate_xlsx(opinions, productid):
+    file_path = os.path.join(os.getcwd(), f"{productid}.xlsx")
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.append(["author", "recommendaton", "stars", "content", "pros", "cons"])
@@ -77,6 +86,6 @@ def generate_xlsx(productid):
             ]
         )
 
-    wb.save("products.xlsx")
+    wb.save(file_path)
 
-    return "products.xlsx"
+    return file_path

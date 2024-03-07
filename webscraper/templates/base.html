@@ -52,20 +52,9 @@
                             <a class="nav-link" href="#">Author</a>
                         </li>
                     </ul>
-                    <script>
-                        function submitForm() {
-                            event.preventDefault();
-                            var productId = document.getElementById('productId').value;
-                            var form = document.getElementById('navSearchForm');
-                            form.action = "{{ url_for('product') }}?productid=" + productId;
-                            form.submit();
-                            return false;
-                        }
-                    </script>
-
-                    <form class="d-flex" role="search" id="navSearchForm" onsubmit="return submitForm();">
+                    <form action="/product" class="d-flex" role="search" id="navSearchForm">
                         <input class="form-control me-2" type="search" placeholder="Product number" aria-label="Search"
-                            id="productId" name="productid">
+                            id="productId" name="productid" required>
                         <button class="search-button" type="submit" id="navSearchButton">Search</button>
                     </form>
                 </div>
