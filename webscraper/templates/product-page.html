@@ -13,17 +13,17 @@
 {% block body %}
 <div class="container pt-2 d-flex flex-column gap-4">
     <div class="item-description container d-flex w-100 p-3 gap-3 rounded-4 shadow">
-        <img src="{{ product_dict['img_url'] }}" alt="{{ product_dict['product_name'] }} + 'image'" \ class="rounded-3">
+        <img src="{{ product.img_url }}" alt="{{ product.product_name }} + 'image'" \ class="rounded-3">
         <div class="d-flex flex-column gap-3">
             <div class="d-flex flex-column">
-                <span class="text-secondary">{{ productid }}</span>
-                <h3>{{ product_dict["product_name"]}}</spa>
+                <span class="text-secondary">{{ product.productid }}</span>
+                <h3>{{ product.product_name}}</spa>
             </div>
 
             <div class="d-flex flex-column justify-content-center">
                 <span class="text-secondary">Rating</span>
                 <h3>
-                    {{ product_dict["rating"]}}
+                    {{ product.rating }}
                     <span class="material-symbols-outlined">
                         star
                     </span>
@@ -32,9 +32,10 @@
         </div>
     </div>
     <div class="item-description container d-flex flex-column w-100 p-4 gap-3 rounded-4 shadow">
-        {% for opinion in product_dict.product_opinions %}
+        {% for opinion in product.product_opinions %}
+        <!-- TODO:Delete later -->
         <script>
-            console.log("{{ opinion }}");
+            console.log("{{ opinion.author }}");
         </script>
         <div class="container gap-3 border-bottom border-secondary">
             <div class="row">
@@ -42,10 +43,12 @@
             </div>
             <div class="row">
                 <div class="col col-lg-2">
-                    {% if opinion.recomendation == 'Polecam' %}
-                    <span class="recomendation-ok">{{ opinion.recomendation }}</span>
+                    {% if opinion.recommendation == 'Polecam' %}
+                    <span class="recomendation-ok">{{ opinion.recommendation }}</span>
+                    {% elif opinion.recommendation == 'Nie polecam' %}
+                    <span class="recomendation-not-ok">{{ opinion.recommendation }}</span>
                     {% else %}
-                    <span class="recomendation-not-ok">{{ opinion.recomendation }}</span>
+                    <span class="text-secondary">{{ opinion.recommendation }}</span>
                     {% endif %}
                     <span>{{ opinion.stars }}</span>
                 </div>

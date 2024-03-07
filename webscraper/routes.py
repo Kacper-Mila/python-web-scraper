@@ -7,16 +7,21 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/scrape", methods=["GET"])
-def scrape():
+@app.route("/product", methods=["GET"])
+def product():
     args = request.args
     productid = args.get("productid")
     print(f"args: {args} productid: {productid}")
-    product_dict = scraper.scrape(productid)
+    product = scraper.scrape(productid)
 
-    if isinstance(product_dict, Exception):
+    if isinstance(product, Exception):
         return render_template("error.html")
-        
+    
+    for opinion in product.product_opinions:
+        if opinion.pros is not None:
+            opinion.pros = opinion.pros.split(", ")
+            opinion.cons = opinion.cons.split(", ")
+    
     return render_template(
-        "scrape.html", product_dict=product_dict, productid=productid
+        "product-page.html", product=product
     )

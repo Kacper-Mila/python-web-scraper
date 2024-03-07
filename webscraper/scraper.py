@@ -1,13 +1,16 @@
 from bs4 import BeautifulSoup
 import requests
+from webscraper import database_handler
 
 
 def scrape(productid: str):
     url: str = f"https://www.ceneo.pl/{productid}"
-    print(productid)
 
-    response = requests.get(url)
+    if productid == "":
+        return Exception("Product not found")
     
+    response = requests.get(url)
+
     if response.status_code != 200:
         return Exception("Product not found")
 
@@ -16,14 +19,13 @@ def scrape(productid: str):
     product_opinins = soup.find_all(
         "div", class_="user-post user-post__card js_product-review"
     )
-    product_dict = {}
 
     try:
-        produc_name = soup.find(
+        product_name = soup.find(
             "h1", class_="product-top__product-info__name"
         ).text.strip()
     except:
-        produc_name = None
+        product_name = None
 
     try:
         img_url = soup.find("img", class_="gallery-carousel__media")["src"]
@@ -38,12 +40,10 @@ def scrape(productid: str):
     except:
         rating = None
 
-    product_dict = {
-        "product_name": produc_name,
-        "img_url": img_url,
-        "rating": rating,
-        "product_opinions": [],
-    }
+    product = database_handler.Product(
+        productid=productid, product_name=product_name, img_url=img_url, rating=rating
+    )
+    database_handler.add_product_to_database(product)
 
     for opinion in product_opinins:
         try:
@@ -75,23 +75,27 @@ def scrape(productid: str):
 
             pros_and_cons = split_pros_and_cons(pros_and_cons)
 
-            pros = pros_and_cons[0]
-            cons = pros_and_cons[1]
+            pros = ', '.join(pros_and_cons[0])
+            cons = ', '.join(pros_and_cons[1])
         except:
             pros = None
             cons = None
 
-        product_opinion = {
-            "author": author,
-            "recomendation": recommendation,
-            "stars": stars,
-            "content": content,
-            "pros": pros,
-            "cons": cons,
-        }
-        product_dict["product_opinions"].append(product_opinion)
+        opinion = database_handler.Opinion(
+            author=author,
+            recommendation=recommendation,
+            stars=stars,
+            content=content,
+            pros=pros,
+            cons=cons,
+            productid=product.productid,
+        )
+        database_handler.add_opinion_to_database(opinion)
 
-    return product_dict
+    database_handler.commit_to_database()
+    print(database_handler.Product.query.get(productid))
+    
+    return database_handler.Product.query.get(productid)
 
 
 def split_pros_and_cons(pros_and_cons):
@@ -116,7 +120,5 @@ def split_pros_and_cons(pros_and_cons):
         pros.remove("")
     while "" in cons:
         cons.remove("")
-
-    print(pros, cons)
 
     return [pros, cons]
