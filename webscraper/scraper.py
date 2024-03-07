@@ -8,7 +8,7 @@ def scrape(productid: str):
 
     if productid == "":
         return Exception("Product not found")
-    
+
     response = requests.get(url)
 
     if response.status_code != 200:
@@ -75,8 +75,8 @@ def scrape(productid: str):
 
             pros_and_cons = split_pros_and_cons(pros_and_cons)
 
-            pros = ', '.join(pros_and_cons[0])
-            cons = ', '.join(pros_and_cons[1])
+            pros = ", ".join(pros_and_cons[0])
+            cons = ", ".join(pros_and_cons[1])
         except:
             pros = None
             cons = None
@@ -93,8 +93,7 @@ def scrape(productid: str):
         database_handler.add_opinion_to_database(opinion)
 
     database_handler.commit_to_database()
-    print(database_handler.Product.query.get(productid))
-    
+
     return database_handler.Product.query.get(productid)
 
 

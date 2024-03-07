@@ -28,7 +28,7 @@
 
 
     <div class="wrapper">
-        <nav class="navbar navbar-expand-lg nav-navbar shadow-sm">
+        <nav class="navbar navbar-expand-lg nav-navbar shadow-sm sticky-lg-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url_for('home') }}"><img
                         src="{{ url_for('static', filename='img/coat_hanger.svg') }}" alt="scraping tool" class="mb-1">
@@ -59,16 +59,13 @@
                             var form = document.getElementById('navSearchForm');
                             form.action = "{{ url_for('product') }}?productid=" + productId;
                             form.submit();
-                            // TODO: Delere later
-                            console.log(productId);
-                            console.log("clicked");
                             return false;
                         }
                     </script>
 
                     <form class="d-flex" role="search" id="navSearchForm" onsubmit="return submitForm();">
-                        <input class="form-control me-2" type="search" placeholder="Product number" aria-label="Search" id="productId"
-                            name="productid">
+                        <input class="form-control me-2" type="search" placeholder="Product number" aria-label="Search"
+                            id="productId" name="productid">
                         <button class="search-button" type="submit" id="navSearchButton">Search</button>
                     </form>
                 </div>

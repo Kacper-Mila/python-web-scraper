@@ -12,43 +12,67 @@
 
 {% block body %}
 <div class="container pt-2 d-flex flex-column gap-4">
-    <div class="item-description container d-flex w-100 p-3 gap-3 rounded-4 shadow">
+    <div class="item-description container d-flex flex-column flex-md-row w-100 p-3 gap-3 rounded-4 shadow ">
         <img src="{{ product.img_url }}" alt="{{ product.product_name }} + 'image'" \ class="rounded-3">
-        <div class="d-flex flex-column gap-3">
+        <div class="d-flex flex-column gap-3 w-100">
             <div class="d-flex flex-column">
-                <span class="text-secondary">{{ product.productid }}</span>
+                <span id="prid" class="text-secondary">{{ product.productid }}</span>
                 <h3>{{ product.product_name}}</spa>
             </div>
 
-            <div class="d-flex flex-column justify-content-center">
-                <span class="text-secondary">Rating</span>
-                <h3>
-                    {{ product.rating }}
-                    <span class="material-symbols-outlined">
-                        star
-                    </span>
-                </h3>
+            <div class="row">
+                <div class="d-flex flex-column justify-content-center col col-3">
+                    <span class="text-secondary">Rating</span>
+                    <h3>
+                        {{ product.rating }}
+                        <span class="material-symbols-outlined">
+                            star
+                        </span>
+                    </h3>
+                </div>
+
+                <div class="col d-flex align-items-center justify-content-end">
+                    <script async>
+                        function downloadFile() {
+                            event.preventDefault();
+                            var ftype = document.getElementById('selectDownload').value;
+                            productId = document.getElementById('prid').innerText;
+                            var form = document.getElementById('downloadFileForm');
+                            form.action = "{{ url_for('download') }}? file_type=" + ftype + "&productid=" + productId;
+                            form.submit();
+                            // TODO: Delete later
+                            console.log(productId);
+                            console.log("clicked");
+                            return false;
+                        }
+                    </script>
+                    <form id="downloadFileForm" class="d-flex" onsubmit="return downloadFile()">
+                        <select id="selectDownload" class="form-select" aria-label="Default select example">
+                            <option selected>Select file type</option>
+                            <option value="csv">CSV</option>
+                            <option value="json">json</option>
+                            <option value="xlsx">xlsx</option>
+                        </select>
+                        <button class="download-button" type="submit" id="fileDownloadbutton">Download</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="item-description container d-flex flex-column w-100 p-4 gap-3 rounded-4 shadow">
+    <div class="d-flex flex-column w-100 gap-3">
         {% for opinion in product.product_opinions %}
-        <!-- TODO:Delete later -->
-        <script>
-            console.log("{{ opinion.author }}");
-        </script>
-        <div class="container gap-3 border-bottom border-secondary">
+        <div class="container gap-3 border-bottom shadow border-secondary item-description p-3 rounded-4">
             <div class="row">
                 <h5>{{ opinion.author }}</h5>
             </div>
-            <div class="row">
-                <div class="col col-lg-2">
+            <div class="row gap-3">
+                <div class="col-md-3 col-lg-2">
                     {% if opinion.recommendation == 'Polecam' %}
                     <span class="recomendation-ok">{{ opinion.recommendation }}</span>
                     {% elif opinion.recommendation == 'Nie polecam' %}
                     <span class="recomendation-not-ok">{{ opinion.recommendation }}</span>
                     {% else %}
-                    <span class="text-secondary">{{ opinion.recommendation }}</span>
+                    <span class="hiding"></span>
                     {% endif %}
                     <span>{{ opinion.stars }}</span>
                 </div>
@@ -71,6 +95,10 @@
                 </div>
                 {% endif %}
                 {% if opinion.cons %}
+                <script>
+                    console.log("entered cons")
+                    console.log("{{ opinion.cons }}")
+                </script>
                 <div class="col col-lg-3 text-center border-top border-secondary pt-2">
                     <h4 class="accent-color">Cons</h4>
                     {% for c in opinion.cons %}
