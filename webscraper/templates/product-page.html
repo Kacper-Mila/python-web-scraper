@@ -51,6 +51,8 @@
                         <option selected disabled value="">Sort by</option>
                         <option value="highest">Highest Rating</option>
                         <option value="lowest">Lowest Rating</option>
+                        <option value="recommend">Positive first</option>
+                        <option value="not-recommend">Negative first</option>
                     </select>
                     <button type="submit" class="download-button">Sort</button>
                 </form>
@@ -108,8 +110,6 @@
                 {% endif %}
                 {% if opinion.cons %}
                 <script>
-                    console.log("entered cons")
-                    console.log("{{ opinion.cons }}")
                 </script>
                 <div class="col col-lg-3 text-center border-top border-secondary pt-2">
                     <h4 class="accent-color">Cons</h4>

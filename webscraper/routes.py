@@ -30,11 +30,7 @@ def product():
 @app.route("/download", methods=["GET"])
 def download():
     args = request.args
-    print("download args")
-    print(args)
     file_type = args.get("file_type")
-    print("file type")
-    print(file_type)
     productid = args.get("productid")
     file = download_product.download(file_type, productid)
 

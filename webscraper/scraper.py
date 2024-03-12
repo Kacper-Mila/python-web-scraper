@@ -16,9 +16,6 @@ def scrape(productid: str):
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    product_opinins = soup.find_all(
-        "div", class_="user-post user-post__card js_product-review"
-    )
 
     try:
         product_name = soup.find(
@@ -45,7 +42,32 @@ def scrape(productid: str):
     )
     database_handler.add_product_to_database(product)
 
-    for opinion in product_opinins:
+    get_all_product_opinions(url, productid)
+
+    database_handler.commit_to_database()
+
+    return database_handler.Product.query.get(productid)
+
+def get_all_product_opinions(url, productid):
+    product_opinions = []
+    soup2 = BeautifulSoup(requests.get(url, allow_redirects=False).text, "html.parser")
+    product_opinions.extend(
+        soup2.find_all("div", class_="user-post user-post__card js_product-review")
+    )
+
+    for i in range(1, 5):
+        try:
+            response2 = requests.get(f"{url}/opinie-{i}", allow_redirects=False)
+            soup2 = BeautifulSoup(response2.text, "html.parser")
+            product_opinions.extend(
+                soup2.find_all(
+                    "div", class_="user-post user-post__card js_product-review"
+                )
+            )
+        except:
+            break
+
+    for opinion in product_opinions:
         try:
             author = opinion.find("span", class_="user-post__author-name").text.strip()
         except:
@@ -88,13 +110,9 @@ def scrape(productid: str):
             content=content,
             pros=pros,
             cons=cons,
-            productid=product.productid,
+            productid=productid,
         )
         database_handler.add_opinion_to_database(opinion)
-
-    database_handler.commit_to_database()
-
-    return database_handler.Product.query.get(productid)
 
 
 def split_pros_and_cons(pros_and_cons):
