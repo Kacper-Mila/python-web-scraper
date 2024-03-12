@@ -21,7 +21,7 @@ def product():
         if opinion.pros is not None:
             opinion.pros = list(filter(None, opinion.pros.split(", ")))
             opinion.cons = list(filter(None, opinion.cons.split(", ")))
-    
+
     sort_opinions.sort(product.product_opinions, sort_by)
 
     return render_template("product-page.html", product=product)
@@ -37,15 +37,26 @@ def download():
     print(file_type)
     productid = args.get("productid")
     file = download_product.download(file_type, productid)
-    
+
     if file is None or isinstance(file, Exception):
         return render_template("error.html", error=file)
-    
+
     return send_file(file, as_attachment=True)
+
 
 @app.route("/product-charts", methods=["GET"])
 def product_charts():
     args = request.args
     productid = args.get("productid")
-    product = database_handler.get_product(productid)
-    return render_template("product-charts.html", product=product)
+    return render_template(
+        "product-charts.html",
+        productid=productid,
+    )
+    
+@app.route("/charts-data", methods=["GET"])
+def charts_data():
+    from webscraper import charts_data
+    args = request.args
+    productid = args.get("productid")
+    data = charts_data.get_charts_data(productid)
+    return data

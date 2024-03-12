@@ -93,6 +93,11 @@ def remove_product_from_database(productid: str):
 def get_product(productid: str) -> Product:
     return Product.query.get(productid)
 
+def get_opinion_recommendation_count(productid: str, recommendation: str) -> int:
+    return Opinion.query.filter_by(productid=productid, recommendation=recommendation).count()
+
+def get_opinion_stars_count(productid: str, stars: int) -> int:
+    return Opinion.query.filter_by(productid=productid, stars=stars).count()
 
 def is_same_opinion(opinion1: Opinion, opinion2: Opinion) -> bool:
     return (
