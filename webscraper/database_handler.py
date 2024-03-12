@@ -9,6 +9,9 @@ class Product(db.Model):
     product_name = db.Column(db.String(100))
     img_url = db.Column(db.String(100))
     rating = db.Column(db.String(100))
+    opinions_count = db.Column(db.Integer, default=0)
+    total_pros_count = db.Column(db.Integer, default=0)
+    total_cons_count = db.Column(db.Integer, default=0)
     product_opinions = db.relationship("Opinion", backref="product", lazy=True)
 
     def __repr__(self) -> str:
@@ -93,13 +96,20 @@ def remove_product_from_database(productid: str):
 def get_product(productid: str) -> Product:
     return Product.query.get(productid)
 
+
 def get_opinion_recommendation_count(productid: str, recommendation: str) -> int:
     return Opinion.query.filter_by(productid=productid, recommendation=recommendation).count()
+
 
 def get_opinion_stars_count(productid: str, stars1: str, stars2: str) -> int:
     return Opinion.query.filter(
         Opinion.productid == productid, Opinion.stars.in_([stars1, stars2])
     ).count()
+
+
+def get_all_products() -> list[Product]:
+    print(Product.query.all())
+    return Product.query.all()
 
 
 def is_same_opinion(opinion1: Opinion, opinion2: Opinion) -> bool:

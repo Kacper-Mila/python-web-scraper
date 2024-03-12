@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 from webscraper import database_handler
 
-
 def scrape(productid: str):
     url: str = f"https://www.ceneo.pl/{productid}"
 
@@ -48,7 +47,7 @@ def scrape(productid: str):
 
     return database_handler.Product.query.get(productid)
 
-def get_all_product_opinions(url, productid):
+def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
     product_opinions = []
     soup2 = BeautifulSoup(requests.get(url, allow_redirects=False).text, "html.parser")
     product_opinions.extend(
@@ -66,6 +65,8 @@ def get_all_product_opinions(url, productid):
             )
         except:
             break
+
+    database_handler.get_product(productid).opinions_count = len(product_opinions)
 
     for opinion in product_opinions:
         try:
@@ -97,6 +98,9 @@ def get_all_product_opinions(url, productid):
 
             pros_and_cons = split_pros_and_cons(pros_and_cons)
 
+            pros_count += len(pros_and_cons[0])
+            cons_count += len(pros_and_cons[1])
+
             pros = ", ".join(pros_and_cons[0])
             cons = ", ".join(pros_and_cons[1])
         except:
@@ -113,6 +117,10 @@ def get_all_product_opinions(url, productid):
             productid=productid,
         )
         database_handler.add_opinion_to_database(opinion)
+        
+    database_handler.get_product(productid).total_pros_count = pros_count
+    database_handler.get_product(productid).total_cons_count = cons_count
+
 
 
 def split_pros_and_cons(pros_and_cons):

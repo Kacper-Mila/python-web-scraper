@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Product list</a>
+                            <a class="nav-link" href="{{ url_for('product_list') }}">Product list</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Author</a>
@@ -67,7 +67,7 @@
     </div>
     <footer class="container-fluid background-freeze py-3 px-4" data-bs-theme="dark">
         <div class=" row">
-            <div class="col-md-6 d-grid gap-3"> 
+            <div class="col-md-6 d-grid gap-3">
                 <h3 class="accent-color">Disclaimer</h3>
                 <h2 class="h6 text-secondary">
                     This project is for educational purposes.
@@ -88,7 +88,8 @@
                 </div>
                 <div>
                     <p class="text-end">
-                        <a href="https://github.com/Kacper-Mila" target="_blank" class="text-decoration-none text-secondary fs-6">Contact</a>
+                        <a href="https://github.com/Kacper-Mila" target="_blank"
+                            class="text-decoration-none text-secondary fs-6">Contact</a>
                     </p>
                 </div>
             </div>

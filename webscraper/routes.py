@@ -56,3 +56,8 @@ def charts_data():
     productid = args.get("productid")
     data = charts_data.get_charts_data(productid)
     return data
+
+@app.route("/product-list", methods=["GET"])
+def product_list():
+    products = database_handler.get_all_products()
+    return render_template("product-list.html", products=products)
