@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Web Scraper - Product list</title>
+{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    {% if products %}
+    <h1 class="text-center py-4">Recently watched products</h1>
+    <div class="d-flex flex-wrap gap-5 justify-content-between text-secondary">
+        {% for product in products %}
+        <div class="card shadow" style="width: 20rem;">
+            <img src="{{ product.img_url }}" class="card-img-top img-thumbnail card_img" alt="product.product_name"
+                style="max-height: 15rem;">
+            <div class="card-body">
+                <h4 class="card-title"><a class="card_link" href="/product?productid={{ product.productid }}">
+                        {{product.product_name}}
+                    </a></h4>
+
+                <h6 class="card-text text-success">Average rating: {{ product.rating }}</h6>
+                <p class="card-text">Opionion count: {{ product.opinions_count }}</p>
+                <p class="card-text">Pros count: {{ product.total_pros_count }}</p>
+                <p class="card-text">Cons count: {{ product.total_cons_count }}</p>
+
+                <form action="/download" id="download-file{{product.productid}}" class="d-flex">
+                    <input name="productid" type="hidden" id="productid{{product.productid}}" value="{{ product.productid }}">
+                    <select id="file_type{{product.productid}}" name="file_type" class="form-select form-select-sm"
+                        aria-label="Default select example" required>
+                        <option selected disabled value="">Select file type</option>
+                        <option value="csv">CSV</option>
+                        <option value="json">json</option>
+                        <option value="xlsx">xlsx</option>
+                    </select>
+                    <button class="download-button" type="submit" id="fileDownloadbutton">Download</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="container flex p-3 gap-3">
+        <h1 class="text-center py-4">No products found</h1>
+        <form action="/product" class="d-flex" role="search" id="navSearchForm">
+            <input class="form-control me-2" type="search" placeholder="Search for some products" aria-label="Search"
+                id="productId" name="productid" required>
+            <button class="search-button" type="submit" id="navSearchButton">Search</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

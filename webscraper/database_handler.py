@@ -1,5 +1,6 @@
 from webscraper import app
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import DateTime
 
 db = SQLAlchemy(app)
 
@@ -9,6 +10,9 @@ class Product(db.Model):
     product_name = db.Column(db.String(100))
     img_url = db.Column(db.String(100))
     rating = db.Column(db.String(100))
+    opinions_count = db.Column(db.Integer, default=0)
+    total_pros_count = db.Column(db.Integer, default=0)
+    total_cons_count = db.Column(db.Integer, default=0)
     product_opinions = db.relationship("Opinion", backref="product", lazy=True)
 
     def __repr__(self) -> str:
@@ -20,9 +24,14 @@ class Opinion(db.Model):
     author = db.Column(db.String(100))
     recommendation = db.Column(db.String(100))
     stars = db.Column(db.String(100))
+    confirmed_purchase = db.Column(db.Boolean, default=False)
+    date_of_opinion = db.Column(DateTime)
+    buy_date = db.Column(DateTime)
     content = db.Column(db.String(1000))
     pros = db.Column(db.String(100))
     cons = db.Column(db.String(100))
+    helpfull = db.Column(db.Integer, default=0)
+    not_helpfull = db.Column(db.Integer, default=0)
     productid = db.Column(
         db.String(100), db.ForeignKey("product.productid"), nullable=False
     )
@@ -32,13 +41,19 @@ class Opinion(db.Model):
 
     def __str__(self) -> str:
         return (
+            f"\nOpinion: \n"
             f"id: {self.id}, \n"
             f"author: {self.author}, \n"
             f"recommendation: {self.recommendation}, \n"
             f"stars: {self.stars}, \n"
+            f"confirmed_purchase: {self.confirmed_purchase}, \n"
+            f"date_of_opinion: {self.date_of_opinion}, \n"
+            f"buy_date: {self.buy_date}, \n"
             f"content: {self.content}, \n"
             f"pros: {self.pros}, \n"
             f"cons: {self.cons}, \n"
+            f"helpfull: {self.helpfull}, \n"
+            f"not_helpfull: {self.not_helpfull}, \n"
             f"productid: {self.productid}"
         )
 
@@ -88,6 +103,24 @@ def remove_product_from_database(productid: str):
     if product is not None:
         db.session.delete(product)
         db.session.commit()
+
+
+def get_product(productid: str) -> Product:
+    return Product.query.get(productid)
+
+
+def get_opinion_recommendation_count(productid: str, recommendation: str) -> int:
+    return Opinion.query.filter_by(productid=productid, recommendation=recommendation).count()
+
+
+def get_opinion_stars_count(productid: str, stars1: str, stars2: str) -> int:
+    return Opinion.query.filter(
+        Opinion.productid == productid, Opinion.stars.in_([stars1, stars2])
+    ).count()
+
+
+def get_all_products() -> list[Product]:
+    return Product.query.all()
 
 
 def is_same_opinion(opinion1: Opinion, opinion2: Opinion) -> bool:
