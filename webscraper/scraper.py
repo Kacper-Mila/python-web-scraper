@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
+from datetime import datetime
 from webscraper import database_handler
+
 
 def scrape(productid: str):
     url: str = f"https://www.ceneo.pl/{productid}"
@@ -14,7 +16,6 @@ def scrape(productid: str):
         return Exception("Product not found")
 
     soup = BeautifulSoup(response.text, "html.parser")
-
 
     try:
         product_name = soup.find(
@@ -47,6 +48,7 @@ def scrape(productid: str):
 
     return database_handler.Product.query.get(productid)
 
+
 def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
     product_opinions = []
     soup2 = BeautifulSoup(requests.get(url, allow_redirects=False).text, "html.parser")
@@ -54,7 +56,7 @@ def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
         soup2.find_all("div", class_="user-post user-post__card js_product-review")
     )
 
-    for i in range(1, 5):
+    for i in range(2, 5):
         try:
             response2 = requests.get(f"{url}/opinie-{i}", allow_redirects=False)
             soup2 = BeautifulSoup(response2.text, "html.parser")
@@ -69,6 +71,11 @@ def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
     database_handler.get_product(productid).opinions_count = len(product_opinions)
 
     for opinion in product_opinions:
+        try:
+            opinion_id = opinion.get("data-entry-id")
+        except:
+            opinion_id = None
+
         try:
             author = opinion.find("span", class_="user-post__author-name").text.strip()
         except:
@@ -85,6 +92,29 @@ def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
             stars = opinion.find("span", class_="user-post__score-count").text.strip()
         except:
             stars = None
+
+        try:
+            confirmed_purchase_div = opinion.find("div", class_="review-pz")
+            if confirmed_purchase_div is not None:
+                confirmed_purchase = True
+            else:
+                confirmed_purchase = False
+        except:
+            confirmed_purchase = None
+
+        date_span = opinion.find("span", class_="user-post__published")
+        date_strings = date_span.find_all("time")
+        try:
+            opinion_date_string = date_strings[0].get("datetime")
+            opinion_date = datetime.strptime(opinion_date_string, "%Y-%m-%d %H:%M:%S")
+        except:
+            opinion_date = None
+            
+        try:
+            buy_date_string = date_strings[1].get("datetime")
+            buy_date = datetime.strptime(buy_date_string, "%Y-%m-%d %H:%M:%S")
+        except:
+            buy_date = None
 
         try:
             content = opinion.find("div", class_="user-post__text").text.strip("\n")
@@ -107,20 +137,41 @@ def get_all_product_opinions(url, productid, pros_count=0, cons_count=0):
             pros = None
             cons = None
 
+        try:
+            helpfull_button = opinion.find(
+                "button", class_="vote-yes js_product-review-vote js_vote-yes"
+            )
+            helpfull = int(helpfull_button.find("span").text)
+        except:
+            helpfull = 0
+
+        try:
+            not_helpfull_button = opinion.find(
+                "button", class_="vote-no js_product-review-vote js_vote-no"
+            )
+            not_helpfull = int(not_helpfull_button.find("span").text)
+        except:
+            not_helpfull = 0
+
         opinion = database_handler.Opinion(
+            id=opinion_id,
             author=author,
             recommendation=recommendation,
             stars=stars,
+            confirmed_purchase=confirmed_purchase,
+            date_of_opinion=opinion_date,
+            buy_date=buy_date,
             content=content,
             pros=pros,
             cons=cons,
+            helpfull=helpfull,
+            not_helpfull=not_helpfull,
             productid=productid,
         )
         database_handler.add_opinion_to_database(opinion)
-        
+
     database_handler.get_product(productid).total_pros_count = pros_count
     database_handler.get_product(productid).total_cons_count = cons_count
-
 
 
 def split_pros_and_cons(pros_and_cons):

@@ -23,7 +23,6 @@ def product():
             opinion.cons = list(filter(None, opinion.cons.split(", ")))
 
     sort_opinions.sort(product.product_opinions, sort_by)
-
     return render_template("product-page.html", product=product)
 
 

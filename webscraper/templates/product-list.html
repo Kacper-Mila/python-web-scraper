@@ -10,7 +10,7 @@
     <h1 class="text-center py-4">Recently watched products</h1>
     <div class="d-flex flex-wrap gap-5 justify-content-between text-secondary">
         {% for product in products %}
-        <div class="card" style="width: 20rem;">
+        <div class="card shadow" style="width: 20rem;">
             <img src="{{ product.img_url }}" class="card-img-top img-thumbnail card_img" alt="product.product_name"
                 style="max-height: 15rem;">
             <div class="card-body">

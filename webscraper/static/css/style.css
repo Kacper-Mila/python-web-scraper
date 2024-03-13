@@ -5,6 +5,8 @@
     --Medium-Purple: #d0bdf4;
     --Purple-Pain: #8458B3;
     --Heavy-Purple: #a28089;
+    --Success: #29ba5e;
+    --Defeat: #f59542;
 }
 
 body {
@@ -77,11 +79,11 @@ body {
 }
 
 .recomendation-ok {
-    color: var(--Purple-Pain);
+    color: var(--Success);
 }
 
 .recomendation-not-ok {
-    color: var(--Ice-Cold);
+    color: var(--Defeat);
 }
 
 .download-button {
@@ -103,17 +105,22 @@ body {
     background-color: #7d45ba
 }
 
+.opinion-id {
+    font-size: smaller;
+}
+
 .card_img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-}  
+}
 
 .card_link {
     color: var(--Ice-Cold);
     text-decoration: none;
     transition: color 0.3s, background-color 0.3s;
 }
+
 .card_link:visited {
     color: var(--Ice-Cold);
 }

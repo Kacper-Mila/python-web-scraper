@@ -1,5 +1,6 @@
 from webscraper import app
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import DateTime
 
 db = SQLAlchemy(app)
 
@@ -23,9 +24,14 @@ class Opinion(db.Model):
     author = db.Column(db.String(100))
     recommendation = db.Column(db.String(100))
     stars = db.Column(db.String(100))
+    confirmed_purchase = db.Column(db.Boolean, default=False)
+    date_of_opinion = db.Column(DateTime)
+    buy_date = db.Column(DateTime)
     content = db.Column(db.String(1000))
     pros = db.Column(db.String(100))
     cons = db.Column(db.String(100))
+    helpfull = db.Column(db.Integer, default=0)
+    not_helpfull = db.Column(db.Integer, default=0)
     productid = db.Column(
         db.String(100), db.ForeignKey("product.productid"), nullable=False
     )
@@ -35,13 +41,19 @@ class Opinion(db.Model):
 
     def __str__(self) -> str:
         return (
+            f"\nOpinion: \n"
             f"id: {self.id}, \n"
             f"author: {self.author}, \n"
             f"recommendation: {self.recommendation}, \n"
             f"stars: {self.stars}, \n"
+            f"confirmed_purchase: {self.confirmed_purchase}, \n"
+            f"date_of_opinion: {self.date_of_opinion}, \n"
+            f"buy_date: {self.buy_date}, \n"
             f"content: {self.content}, \n"
             f"pros: {self.pros}, \n"
             f"cons: {self.cons}, \n"
+            f"helpfull: {self.helpfull}, \n"
+            f"not_helpfull: {self.not_helpfull}, \n"
             f"productid: {self.productid}"
         )
 
@@ -108,7 +120,6 @@ def get_opinion_stars_count(productid: str, stars1: str, stars2: str) -> int:
 
 
 def get_all_products() -> list[Product]:
-    print(Product.query.all())
     return Product.query.all()
 
 

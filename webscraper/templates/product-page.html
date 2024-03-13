@@ -16,7 +16,7 @@
         <img src="{{ product.img_url }}" alt="{{ product.product_name }} + 'image'" \ class="rounded-3">
         <div class="d-flex flex-column gap-3 w-100">
             <div class="d-flex flex-column">
-                <span id="prid" class="text-secondary">{{ product.productid }}</span>
+                <span id="prid" class="text-secondary">Product no. {{ product.productid }}</span>
                 <h3>{{ product.product_name}}</spa>
             </div>
 
@@ -53,6 +53,11 @@
                         <option value="lowest">Lowest Rating</option>
                         <option value="recommend">Positive first</option>
                         <option value="not-recommend">Negative first</option>
+                        <option value="vote-useful">Useful opinions first</option>
+                        <option value="vote-not-useful">Not useful opinions first</option>
+                        <option value="verified">Verified first</option>
+                        <option value="newest">Newest opinions first</option>
+                        <option value="oldest">Oldest opinions first</option>
                     </select>
                     <button type="submit" class="download-button">Sort</button>
                 </form>
@@ -74,60 +79,119 @@
     </div>
 
     <div class="d-flex flex-column w-100 gap-3 mb-5">
+        {% if not product.product_opinions %}
+        <div class="container gap-3 border-bottom shadow border-secondary item-description p-3 rounded-4 text-center">
+            <h2 class="text-secondary">No opinions found for this product</h2>
+        </div>
+        {% else %}
         {% for opinion in product.product_opinions %}
         <div class="container gap-3 border-bottom shadow border-secondary item-description p-3 rounded-4">
-            <div class="row">
-                <h5>{{ opinion.author }}</h5>
-            </div>
-            <div class="row gap-3">
-                <div class="col-md-3 col-lg-2">
-                    {% if opinion.recommendation == 'Polecam' %}
-                    <span class="recomendation-ok">{{ opinion.recommendation }}</span>
-                    {% elif opinion.recommendation == 'Nie polecam' %}
-                    <span class="recomendation-not-ok">{{ opinion.recommendation }}</span>
-                    {% else %}
-                    <span class="hiding"></span>
-                    {% endif %}
-                    <span>{{ opinion.stars }}</span>
+            <div class="row d-flex justify-content-between">
+                <div class="col">
+                    <div class="text-secondary opinion-id">Opinion no. {{ opinion.id }}</div>
+                    <h5>{{ opinion.author }}</h5>
                 </div>
                 <div class="col">
-                    <p class="fs-6 lh-base">{{ opinion.content }}</p>
+
+                </div>
+                <div class="col d-flex justify-content-end gap-3">
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vote useful">
+                        <span class="fs-5">
+                            <img src="{{ url_for('static', filename='img/arrow_upward.svg') }}" alt="vote usefull">
+                            {{ opinion.helpfull }}
+                        </span>
+                    </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vote not useful">
+                        <span class="fs-5">
+                            <img src="{{ url_for('static', filename='img/arrow_downward.svg') }}" alt="">
+                            {{ opinion.not_helpfull }}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="row justify-content-md-center pt-2">
-                {% if opinion.pros %}
-                <div class="col col-lg-3 text-center border-top border-secondary pt-2">
-                    <h4 class="accent-color">Pros</h4>
-                    {% for p in opinion.pros %}
-                    <p class="text-start">
-                        <span class="material-symbols-outlined">
-                            add
-                        </span>
-                        {{ p }}
-                    </p>
-                    {% endfor %}
+            <div class="row gap-3">
+                <div class="col-md-4 col-lg-3 gap-4 d-flex flex-column">
+                    <div>
+                        {% if opinion.recommendation == 'Polecam' %}
+                        <span class="recomendation-ok">{{ opinion.recommendation }}</span>
+                        {% elif opinion.recommendation == 'Nie polecam' %}
+                        <span class="recomendation-not-ok">{{ opinion.recommendation }}</span>
+                        {% else %}
+                        <span class="hiding"></span>
+                        {% endif %}
+                        <span>{{ opinion.stars }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="text-secondary opinion-id">Opinion was issued on</span>
+                        <span>{{ opinion.date_of_opinion }}</span>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex gap-1">
+                            {% if opinion.confirmed_purchase %}
+                            <span class="material-symbols-outlined">
+                                verified
+                            </span>
+                            <span class="text-secondary">
+                                Verified purchase
+                            </span>
+                            {% else %}
+                            <span class="material-symbols-outlined">
+                                not_interested
+                            </span>
+                            <span class="text-secondary">
+                                Not verified purchase
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if opinion.buy_date %}
+                    <div class="row">
+                        <span class="text-secondary opinion-id">Purchased on</span>
+                        <span>{{ opinion.buy_date }}</span>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-                {% if opinion.cons %}
-                <script>
-                </script>
-                <div class="col col-lg-3 text-center border-top border-secondary pt-2">
-                    <h4 class="accent-color">Cons</h4>
-                    {% for c in opinion.cons %}
-                    <p class="text-start">
-                        <span class="material-symbols-outlined">
-                            remove
-                        </span>
-                        {{ c }}
-                    </p>
-                    {% endfor %}
+                <div class="col-8 d-flex flex-column justify-content-center">
+                    <p class="fs-6 lh-basepb-2">{{ opinion.content }}</p>
+                    <div class="row justify-content-md-center pt-2">
+                        {% if opinion.pros %}
+                        <hr>
+                        <div class="col col-lg-5">
+                            <h4 class="accent-color">Pros</h4>
+                            {% for p in opinion.pros %}
+                            <p class="text-start">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                                {{ p }}
+                            </p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if opinion.cons %}
+                        <div class="col col-lg-5">
+                            <h4 class="accent-color">Cons</h4>
+                            {% for c in opinion.cons %}
+                            <p class="text-start">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                                {{ c }}
+                            </p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
-                {% endif %}
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 
-
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>
 {% endblock %}

@@ -11,7 +11,6 @@ def download(file_type, productid):
         productid = "product"
     
     try:
-        print("inside download")
         print(file_type, productid)
         if file_type == "csv":
             return generate_csv(opinions, productid)
