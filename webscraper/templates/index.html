@@ -5,11 +5,39 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1 class="">Template</h1>
-    <div class="test-div p-5">
-        testoviron
+<div class="container p-3 d-flex flex-column gap-5">
+    <div class="row p-5 border border-3 border-light rounded-4">
+        <div class="col-4">
+            <h1>Welcome to our Web Scraper</h1>
+        </div>
+        <div class="col fs-5">
+            <div class="row">
+                <p>This application is designed to scrape data from Ceneo. It works by sending HTTP requests to specific URLs and then parsing the response to extract the required information.</p>
+            </div>
+            <div class="row">
+                <form action="/product">
+                    <input name="random" type="hidden" value="true">
+                    <button class="download-button" id="getRandomProduct" type="submit">Check out this random product!</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <h2>How the App Works</h2>
+    <p>Our web scraper works in three steps:</p>
+    <ol>
+        <li>Sending an HTTP request to the URL of the webpage you want to access. The server responds to the request by returning the HTML content of the webpage.</li>
+        <li>Once the webpage content is accessed, the next step is to parse the data. Parsing is the process of extracting data from a webpage by breaking down its HTML structure.</li>
+        <li>After the data is parsed, it is then stored in our database or you can download it as a CSV, JSON or Excel file.</li>
+    </ol>
+
+    <h2>About the Libraries Used</h2>
+    <p>We use a variety of libraries to make this app work. Some of the main ones include:</p>
+    <ul>
+        <li>Flask: A lightweight and flexible Python web framework that provides tools, libraries, and technologies to build web applications. It is designed to make getting started quick and easy, with the ability to scale up to complex applications.</li>
+        <li>BeautifulSoup: For parsing HTML and extracting the data.</li>
+        <li>Chart.js: A powerful, flexible, open-source charting library for JavaScript. It allows developers to create interactive charts in different formats like line, bar, pie, etc., with ease.</li>
+    </ul>
 </div>
 
 {% endblock %}

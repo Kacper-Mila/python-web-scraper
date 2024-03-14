@@ -1,4 +1,4 @@
-from webscraper import app, scraper, download_product, sort_opinions, database_handler
+from webscraper import app, scraper, download_product, sort_opinions, database_handler, utils
 from flask import render_template, request, send_file
 
 
@@ -10,8 +10,14 @@ def home():
 @app.route("/product", methods=["GET"])
 def product():
     args = request.args
-    productid = args.get("productid")
     sort_by = args.get("sort")
+    random = args.get("random")
+    
+    if random is not None:
+        productid = utils.get_random_productid()
+    else:
+        productid = args.get("productid")
+    
     product = scraper.scrape(productid)
 
     if isinstance(product, Exception) or product is None:
@@ -23,7 +29,7 @@ def product():
             opinion.cons = list(filter(None, opinion.cons.split(", ")))
 
     sort_opinions.sort(product.product_opinions, sort_by)
-    return render_template("product-page.html", product=product)
+    return render_template("product-page.html", product = product)
 
 
 @app.route("/download", methods=["GET"])
@@ -48,6 +54,7 @@ def product_charts():
         productid=productid,
     )
     
+    
 @app.route("/charts-data", methods=["GET"])
 def charts_data():
     from webscraper import charts_data
@@ -56,7 +63,14 @@ def charts_data():
     data = charts_data.get_charts_data(productid)
     return data
 
+
 @app.route("/product-list", methods=["GET"])
 def product_list():
     products = database_handler.get_all_products()
-    return render_template("product-list.html", products=products)
+    return render_template("product-list.html", products = products)
+
+
+# @app.route("/random-product", methods=["GET"])
+# def random_product():
+#     randomid = utils.get_random_productid()
+#     return render_template("product-page.html", product = randomid)

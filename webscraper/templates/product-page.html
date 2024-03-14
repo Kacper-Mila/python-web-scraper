@@ -13,7 +13,12 @@
 {% block body %}
 <div class="container pt-2 d-flex flex-column gap-4">
     <div class="item-description container d-flex flex-column flex-md-row w-100 p-3 gap-3 rounded-4 shadow ">
-        <img src="{{ product.img_url }}" alt="{{ product.product_name }} + 'image'" \ class="rounded-3">
+        {% if product.img_url is none %}
+        <img src="{{ url_for('static', filename='img/img_placeholder.png') }}" alt="{{ product.product_name }} + ' image'"
+            class="rounded-3" style="max-width: 25%;">
+        {% else %}
+        <img src="{{ product.img_url }}" alt="{{ product.product_name }} + ' image'" class="rounded-3">
+        {% endif %}
         <div class="d-flex flex-column gap-3 w-100">
             <div class="d-flex flex-column">
                 <span id="prid" class="text-secondary">Product no. {{ product.productid }}</span>
