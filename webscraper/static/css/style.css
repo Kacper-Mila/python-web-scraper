@@ -35,16 +35,34 @@ body {
     background-color: var(--Freeze-Purple);
 }
 
-.button-container>ul>li {
-    height: 2.2rem;
-    border-left: 1px solid var(--Ice-Cold);
+.ico-nav {
+    color: var(--Purple-Pain);
 }
 
-.button-container>ul>li :hover {
-    transition: color 0.3s, background-color 0.3s;
-    transition: text 0.3s;
-    text-decoration: underline var(--Purple-Pain);
-    text-underline-offset: 5px;
+.span-nav {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.span-nav:hover {
+    /* text-underline-offset: 5px;
+    text-decoration: underline;
+    text-decoration-color: var(--Purple-Pain); */
+}
+
+.span-nav::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--Purple-Pain);
+    transition: width 0.3s ease;
+}
+
+.span-nav:hover::before {
+    width: 100%;
 }
 
 .search-button {
@@ -59,10 +77,10 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+    transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
 }
 
 .search-button:hover {
-    transition: color 0.3s, background-color 0.3s;
     background-color: var(--Purple-Pain);
     color: var(--Freeze-Purple);
 }
@@ -90,7 +108,7 @@ body {
     background-color: var(--Purple-Pain);
     color: var(--Freeze-Purple);
     border: 1px solid var(--Purple-Pain);
-    padding: 2px 10px;
+    padding: 3px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -98,10 +116,10 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .download-button:hover {
-    transition: color 0.3s, background-color 0.3s;
     background-color: #7d45ba
 }
 
@@ -118,7 +136,7 @@ body {
 .card_link {
     color: var(--Ice-Cold);
     text-decoration: none;
-    transition: color 0.3s, background-color 0.3s;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .card_link:visited {
@@ -127,4 +145,18 @@ body {
 
 .card_link:hover {
     color: var(--Purple-Pain);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s;
 }

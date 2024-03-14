@@ -1,16 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
-from webscraper import database_handler
+from webscraper import database_handler, utils
 
 
 def scrape(productid: str):
     url: str = f"https://www.ceneo.pl/{productid}"
+    headers = utils.get_random_headers()
 
     if productid == "":
         return Exception("Product not found")
 
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
 
     if response.status_code != 200:
         return Exception("Product not found")

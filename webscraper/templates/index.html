@@ -38,16 +38,63 @@
         </ol>
     </div>
 
-    <h2>About the Libraries Used</h2>
-    <p>We use a variety of libraries to make this app work. Some of the main ones include:</p>
-    <ul>
-        <li>Flask: A lightweight and flexible Python web framework that provides tools, libraries, and technologies to
-            build web applications. It is designed to make getting started quick and easy, with the ability to scale up
-            to complex applications.</li>
-        <li>BeautifulSoup: For parsing HTML and extracting the data.</li>
-        <li>Chart.js: A powerful, flexible, open-source charting library for JavaScript. It allows developers to create
-            interactive charts in different formats like line, bar, pie, etc., with ease.</li>
-    </ul>
+    <div class="row p-5 border border-3 border-light rounded-4 text-center gap-3">
+        <h2>About the Libraries Used</h2>
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item fade-in active">
+                    <div class="row justify-content-center align-content-center" style="height: 15rem;">
+                        <div class="col col-3">
+                            <img src="{{ url_for('static', filename='img/flask_logo.png') }}" class="img-fluid rounded"
+                                alt="flask logo">
+                        </div>
+                        <div class="col text-start col-6 py-5">
+                            <p>A lightweight and flexible Python web framework that provides tools, libraries, and
+                                technologies to
+                                build web applications. It is designed to make getting started quick and easy, with the
+                                ability to scale up
+                                to complex applications.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item fade-in">
+                    <div class="row justify-content-center align-content-center" style="height: 15rem;">
+                        <div class="col col-6 align-items-center justify-content-center">
+                            <p>Python library designed for web scraping purposes. It allows users to extract specific
+                                elements from web pages, making it a valuable tool for tasks such as data mining,
+                                automation, and content aggregation.</p>
+                        </div>
+                        <div class="col col-3 align-items-center justify-content-center">
+                            <img src="{{ url_for('static', filename='img/soup_logo.png') }}" class="img-fluid rounded"
+                                alt="soup logo">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="carousel-item fade-in">
+                    <div class="row justify-content-center align-content-center" style="height: 15rem;">
+                        <div class="col col-3">
+                            <img src="{{ url_for('static', filename='img/chartjs_logo.jpg') }}"
+                                class="img-fluid rounded" alt="chartjs logo">
+                        </div>
+                        <div class="col text-start col-6 py-5">
+                            <p>A powerful, flexible, open-source charting library for JavaScript. It allows developers
+                                to create
+                                interactive charts in different formats like line, bar, pie, etc., with ease.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
