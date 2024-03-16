@@ -21,7 +21,7 @@ def product():
     product = scraper.scrape(productid)
 
     if isinstance(product, Exception) or product is None:
-        return render_template("error.html")
+        return render_template("error.html", exception=product)
 
     for opinion in product.product_opinions:
         if opinion.pros is not None:

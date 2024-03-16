@@ -11,7 +11,8 @@
     <div hidden id="productid">{{ productid }}</div>
     <div class="container py-5 mb-5 flex flex-column gap-4">
         <div class="row">
-            <a href="/product?productid={{ productid }}"><button class="download-button">&#60; Go back</button></a>
+            <a href="/product?productid={{ productid }}"><button class="download-button" data-bs-toggle="modal"
+                    data-bs-target="#modalLoading">&#60; Go back</button></a>
         </div>
         <div class="row justify-content-around background-freeze rounded-4 p-5">
             <div id="circle" class="col-md-4 d-flex flex-column align-items-center" style="height: 340px;">
@@ -22,7 +23,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 </div>
 
 {% endblock %}

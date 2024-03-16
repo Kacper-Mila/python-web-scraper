@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="container p-3 d-flex flex-column gap-5">
-    <div class="row p-5 border border-3 border-light rounded-4">
+    <div class="row p-5 rounded-4 text-dark background-freeze shadow">
         <div class="col-5">
             <h1>Welcome to Ceneo Web Scraper</h1>
         </div>
@@ -18,14 +18,14 @@
             <div class="row">
                 <form action="/product">
                     <input name="random" type="hidden" value="true">
-                    <button class="download-button" id="getRandomProduct" type="submit">Check out this random
+                    <button class="download-button" id="getRandomProduct" type="submit" data-bs-toggle="modal" data-bs-target="#modalLoading">Check out this random
                         product!</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="row p-5 border border-3 border-light rounded-4">
+    <div class="row p-5 rounded-4 text-dark background-freeze shadow">
         <h2>How the App Works</h2>
         <p>Web Scraper works in three steps:</p>
         <ol>
@@ -38,7 +38,7 @@
         </ol>
     </div>
 
-    <div class="row p-5 border border-3 border-light rounded-4 text-center gap-3">
+    <div class="row p-5 rounded-4 text-center gap-3 text-dark background-freeze shadow">
         <h2>About the Libraries Used</h2>
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">

@@ -10,21 +10,30 @@
     <h1 class="text-center py-4">Recently watched products</h1>
     <div class="d-flex flex-wrap gap-5 justify-content-between text-secondary">
         {% for product in products %}
-        <div class="card shadow" style="width: 20rem;">
+        <div class="card shadow" style="width: 20rem;" data-aos="fade-up">
+            {% if product.img_url is none %}
+            <img src="{{ url_for('static', filename='img/img_placeholder.png') }}"
+                class="card-img-top img-thumbnail card_img" alt="product.product_name" style="max-height: 15rem;">
+            {% else %}
             <img src="{{ product.img_url }}" class="card-img-top img-thumbnail card_img" alt="product.product_name"
                 style="max-height: 15rem;">
-            <div class="card-body">
+            {% endif %}
+            <div class="card-body d-flex flex-column justify-content-between gap-2">
                 <h4 class="card-title"><a class="card_link" href="/product?productid={{ product.productid }}">
-                        {{product.product_name}}
+                        <button class="btn btn-sm fs-5 fw-bold" data-bs-toggle="modal" data-bs-target="#modalLoading">
+                            {{product.product_name}}
+                        </button>
                     </a></h4>
-
-                <h6 class="card-text text-success">Average rating: {{ product.rating }}</h6>
-                <p class="card-text">Opionion count: {{ product.opinions_count }}</p>
-                <p class="card-text">Pros count: {{ product.total_pros_count }}</p>
-                <p class="card-text">Cons count: {{ product.total_cons_count }}</p>
+                <div>
+                    <h6 class="card-text text-success">Average rating: {{ product.rating }}</h6>
+                    <p class="card-text">Opionion count: {{ product.opinions_count }}</p>
+                    <p class="card-text">Pros count: {{ product.total_pros_count }}</p>
+                    <p class="card-text">Cons count: {{ product.total_cons_count }}</p>
+                </div>
 
                 <form action="/download" id="download-file{{product.productid}}" class="d-flex">
-                    <input name="productid" type="hidden" id="productid{{product.productid}}" value="{{ product.productid }}">
+                    <input name="productid" type="hidden" id="productid{{product.productid}}"
+                        value="{{ product.productid }}">
                     <select id="file_type{{product.productid}}" name="file_type" class="form-select form-select-sm"
                         aria-label="Default select example" required>
                         <option selected disabled value="">Select file type</option>

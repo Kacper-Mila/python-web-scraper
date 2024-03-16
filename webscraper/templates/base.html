@@ -15,15 +15,16 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Fonts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <!-- Animations -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> -->
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <!-- JQuerry -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     {% block head %}{% endblock %}
 </head>
@@ -90,14 +91,15 @@
                     <form action="/product" class="d-flex" role="search" id="navSearchForm">
                         <input class="form-control me-2" type="search" placeholder="Product ID" aria-label="Search"
                             id="productId" name="productid" required data-bs-toggle="tooltip" data-bs-placement="left"
-                            data-bs-title="Extreact opinions">
+                            data-bs-title="Extract opinions">
                         <button class="search-button" type="submit" id="navSearchButton">Search</button>
                     </form>
                 </div>
             </div>
         </nav>
 
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
     </div>
     <footer class="container-fluid background-freeze py-3 px-4" data-bs-theme="dark">
         <div class=" row">
@@ -129,6 +131,8 @@
             </div>
         </div>
     </footer>
+    {% include 'modal.html' %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
