@@ -1,4 +1,11 @@
-from webscraper import app, scraper, download_product, sort_opinions, database_handler, utils
+from webscraper import (
+    app,
+    scraper,
+    download_product,
+    sort_opinions,
+    database_handler,
+    utils,
+)
 from flask import render_template, request, send_file
 
 
@@ -12,13 +19,18 @@ def product():
     args = request.args
     sort_by = args.get("sort")
     random = args.get("random")
-    
+
     if random is not None:
         productid = utils.get_random_productid()
     else:
         productid = args.get("productid")
-    
-    product = scraper.scrape(productid)
+
+    database_product = database_handler.get_product(productid)
+
+    if not database_product:
+        product = scraper.scrape(productid)
+    else:
+        product = database_product
 
     if isinstance(product, Exception) or product is None:
         return render_template("error.html", exception=product)
@@ -29,7 +41,7 @@ def product():
             opinion.cons = list(filter(None, opinion.cons.split(", ")))
 
     sort_opinions.sort(product.product_opinions, sort_by)
-    return render_template("product-page.html", product = product)
+    return render_template("product-page.html", product=product)
 
 
 @app.route("/download", methods=["GET"])
@@ -53,11 +65,12 @@ def product_charts():
         "product-charts.html",
         productid=productid,
     )
-    
-    
+
+
 @app.route("/charts-data", methods=["GET"])
 def charts_data():
     from webscraper import charts_data
+
     args = request.args
     productid = args.get("productid")
     data = charts_data.get_charts_data(productid)
@@ -67,10 +80,5 @@ def charts_data():
 @app.route("/product-list", methods=["GET"])
 def product_list():
     products = database_handler.get_all_products()
-    return render_template("product-list.html", products = products)
-
-
-# @app.route("/random-product", methods=["GET"])
-# def random_product():
-#     randomid = utils.get_random_productid()
-#     return render_template("product-page.html", product = randomid)
+    products.reverse()
+    return render_template("product-list.html", products=products)

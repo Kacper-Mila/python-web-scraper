@@ -110,7 +110,9 @@ def get_product(productid: str) -> Product:
 
 
 def get_opinion_recommendation_count(productid: str, recommendation: str) -> int:
-    return Opinion.query.filter_by(productid=productid, recommendation=recommendation).count()
+    return Opinion.query.filter_by(
+        productid=productid, recommendation=recommendation
+    ).count()
 
 
 def get_opinion_stars_count(productid: str, stars1: str, stars2: str) -> int:

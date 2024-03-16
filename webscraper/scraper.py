@@ -89,7 +89,7 @@ def scrape_all_product_opinions(url, productid, pros_count=0, cons_count=0):
         content = scrape_opinion_content(opinion)
         helpfull = scrape_helpfull_button(opinion)
         not_helpfull = scrape_not_helpfull_button(opinion)
-        
+
         try:
             pros_and_cons = opinion.find("div", class_="review-feature").text.split(
                 "\n"
@@ -174,7 +174,7 @@ def scrape_opinion_confirmed_purchase(opinion):
             confirmed_purchase = False
     except:
         confirmed_purchase = None
-        
+
     return confirmed_purchase
 
 
@@ -222,6 +222,7 @@ def scrape_helpfull_button(opinion):
 
     return helpfull
 
+
 def scrape_not_helpfull_button(opinion):
     try:
         not_helpfull_button = opinion.find(
@@ -230,8 +231,9 @@ def scrape_not_helpfull_button(opinion):
         not_helpfull = int(not_helpfull_button.find("span").text)
     except:
         not_helpfull = 0
-        
+
     return not_helpfull
+
 
 def split_pros_and_cons(pros_and_cons):
     pros = []

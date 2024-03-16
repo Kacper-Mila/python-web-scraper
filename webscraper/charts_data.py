@@ -35,11 +35,21 @@ def get_charts_data(productid):
                 {
                     "label": "Stars count",
                     "data": [
-                        database_handler.get_opinion_stars_count(productid, "1/5", "0,5/5"),
-                        database_handler.get_opinion_stars_count(productid, "2/5", "1,5/5"),
-                        database_handler.get_opinion_stars_count(productid, "3/5", "2,5/5"),
-                        database_handler.get_opinion_stars_count(productid, "4/5", "3,5/5"),
-                        database_handler.get_opinion_stars_count(productid, "5/5", "4,5/5"),
+                        database_handler.get_opinion_stars_count(
+                            productid, "1/5", "0,5/5"
+                        ),
+                        database_handler.get_opinion_stars_count(
+                            productid, "2/5", "1,5/5"
+                        ),
+                        database_handler.get_opinion_stars_count(
+                            productid, "3/5", "2,5/5"
+                        ),
+                        database_handler.get_opinion_stars_count(
+                            productid, "4/5", "3,5/5"
+                        ),
+                        database_handler.get_opinion_stars_count(
+                            productid, "5/5", "4,5/5"
+                        ),
                     ],
                     "borderColor": "#e5eaf5",
                     "backgroundColor": [

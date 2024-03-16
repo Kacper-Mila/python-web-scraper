@@ -7,9 +7,9 @@ from webscraper.database_handler import Opinion
 
 def download(file_type, productid):
     opinions = Opinion.query.filter_by(productid=productid).all()
-    if productid == '':
+    if productid == "":
         productid = "product"
-    
+
     try:
         print(file_type, productid)
         if file_type == "csv":

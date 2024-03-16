@@ -9,13 +9,14 @@ user_agents = [
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537",
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537",
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
-    
 ]
+
 
 def get_random_headers():
     return {
         "User-Agent": random.choice(user_agents),
     }
+
 
 def get_random_productid():
     random_productid = "".join(random.choices("1234567890", k=random.randint(8, 9)))
@@ -26,7 +27,9 @@ def get_random_productid():
     try:
         print("getting random productid")
         response = requests.get(
-            f"https://www.ceneo.pl/{random_productid}", allow_redirects=False, headers=headers
+            f"https://www.ceneo.pl/{random_productid}",
+            allow_redirects=False,
+            headers=headers,
         )
         print(response.status_code)
         response.raise_for_status()
