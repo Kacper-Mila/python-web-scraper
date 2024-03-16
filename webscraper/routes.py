@@ -82,3 +82,8 @@ def product_list():
     products = database_handler.get_all_products()
     products.reverse()
     return render_template("product-list.html", products=products)
+
+
+@app.route("/author", methods=["GET"])
+def author():
+    return render_template("author.html")

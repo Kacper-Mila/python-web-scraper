@@ -20,6 +20,10 @@ body {
     color: var(--Purple-Pain);
 }
 
+.text-freeze {
+    color: var(--Freeze-Purple);
+}
+
 .background-freeze {
     background-color: var(--Freeze-Purple);
 }
@@ -110,11 +114,12 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
 .download-button:hover {
-    background-color: #7d45ba
+    background-color: #581e97;
+    color: var(--Freeze-Purple);
 }
 
 .opinion-id {
@@ -153,6 +158,32 @@ body {
 
 .fade-in {
     animation: fadeIn 1s;
+}
+
+.about-me-button {
+    background-color: var(--Purple-Pain);
+    color: var(--Freeze-Purple);
+    border: 1px solid var(--Purple-Pain);
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out,
+        transform 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
+}
+
+.about-me-button:hover {
+    background-color: #7d45ba;
+    color: var(--Freeze-Purple);
+    transform: scale(1.05);
+    -webkit-box-shadow: 5px 9px 14px -5px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 5px 9px 14px -5px rgba(66, 68, 90, 1);
+    box-shadow: 5px 9px 14px -5px rgba(66, 68, 90, 1);
 }
 
 .carousel-control-prev-icon {

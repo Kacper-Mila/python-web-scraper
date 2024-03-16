@@ -1,0 +1,80 @@
+.section {
+    display: grid;
+    justify-items: center;
+    width: 100%;
+}
+
+.author {
+    padding: 2rem 0 4rem 0;
+}
+
+.card-container {
+    display: flex;
+    width: 70rem;
+    height: 30rem;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem 3rem;
+
+    background-color: var(--text-background);
+    border-radius: 20px;
+}
+
+.about-me-card {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    transition: transform 0.5s ease-in-out;
+
+    border-radius: 20px;
+    border: 2px solid white;
+}
+
+#photo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+#image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+#text {
+    flex: 1;
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+}
+
+#content {
+    width: 60%;
+}
+
+.switch-content-button {
+    border: none;
+    cursor: pointer;
+    background-color: #a28089;
+    padding: 1rem 0;
+    transition: all .2s ease-in;
+
+}
+
+.switch-content-button img:hover {
+    filter: brightness(60%);
+    transform: translateX(10px);
+}
+
+.forward-arrow {
+    transition: all .2s ease-in;
+}

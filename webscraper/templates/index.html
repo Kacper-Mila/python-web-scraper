@@ -12,13 +12,15 @@
         </div>
         <div class="col fs-5">
             <div class="row">
-                <p>This application is designed to scrape data from Ceneo. It works by sending HTTP requests to specific
-                    URLs and then parsing the response to extract the required information.</p>
+                <p>This application is designed to extract data from Ceneo. Enter the ID of the desired product in the
+                    upper right corner
+                    to start the extraction process, and you will be taken to the product page </p>
             </div>
             <div class="row">
                 <form action="/product">
                     <input name="random" type="hidden" value="true">
-                    <button class="download-button" id="getRandomProduct" type="submit" data-bs-toggle="modal" data-bs-target="#modalLoading">Check out this random
+                    <button class="download-button" id="getRandomProduct" type="submit" data-bs-toggle="modal"
+                        data-bs-target="#modalLoading">Check out this random
                         product!</button>
                 </form>
             </div>
@@ -33,7 +35,7 @@
                 by returning the HTML content of the webpage.</li>
             <li>Once the webpage content is accessed, the next step is to parse the data. Parsing is the process of
                 extracting data from a webpage by breaking down its HTML structure.</li>
-            <li>After the data is parsed, it is then stored in our database or you can download it as a CSV, JSON or
+            <li>After the data is parsed, it is then stored in the database or you can download it as a CSV, JSON or
                 Excel file.</li>
         </ol>
     </div>

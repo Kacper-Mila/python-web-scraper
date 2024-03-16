@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/author.css') }}">
+<script src="{{ url_for('static', filename='js/author.js') }}" async></script>
+<title>Web Scraper - Author</title>
+{% endblock %}
+
+{% block body %}
+<section class="author section">
+    <div class="card-container">
+        <div id="about-me-card" class="about-me-card">
+            <div id="photo">
+                <img id="image" src="{{ url_for('static', filename='img/Pieczec_uek.png') }}" alt="UEK Logo"
+                    style="object-fit: fill" />
+            </div>
+            <div id="text">
+                <div>
+                    <h1 id="about-heading">About me</h1>
+                </div>
+                <div id="content">
+                    <p>
+                        My name is Kacper Mila, i'm on the first year of applied
+                        informatics.
+                    </p>
+                    <p>
+                        Why applied informatics? I guess because it's a good way to
+                        develp further knowlage about my field of intrests and work.
+                    </p>
+                    <p>
+                        In addition to studying, I work as a junior software developer
+                        for a major company involved in, among other things, voice
+                        communication in the field
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="button-div">
+            <button class="switch-content-button" onclick="switchContent()">
+                <img class="forward-arrow" src="{{ url_for('static', filename='img/arrow-forward.svg') }}"
+                    alt="arrow-forward" />
+            </button>
+        </div>
+    </div>
+</section>
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="p-5 text-center col-5">
+            <img src="{{ url_for('static', filename='img/github.svg') }}" class="bi mt-4 mb-3 var(--bs-indigo);"
+                width="100" height="100">
+            <h1 class="text-body-emphasis">Github repository</h1>
+            <p class="col-lg-8 mx-auto fs-5 text-freeze">
+                Click the button below to visit my github repository containing all the code for this project
+            </p>
+            <div class="d-inline-flex gap-2 mb-4">
+                <a href="https://github.com/Kacper-Mila/EDI"
+                    class="d-inline-flex align-items-center about-me-button px-4 py-3 rounded-pill">
+                    Go to repository
+                </a>
+            </div>
+        </div>
+        <div class="text-center col-1 d-flex justify-content-center align-items-center">
+            <h1>Or...</h1>
+        </div>
+        <div class="p-5 text-center col-5">
+            <img src="{{ url_for('static', filename='img/linkedin.png') }}" class="bi mt-4 mb-3 var(--bs-indigo);"
+                width="100" height="100">
+            <h1 class="text-body-emphasis">Profile on LinkedIn</h1>
+            <p class="col-lg-8 mx-auto fs-5 text-freeze">
+                Let's stay in touch and connect on LinkedIn
+            </p>
+            <div class="d-inline-flex gap-2 mb-4">
+                <a href="https://www.linkedin.com/in/kacper-mila/"
+                    class="d-inline-flex align-items-center about-me-button px-4 py-3 rounded-pill">
+                    Go to my Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
