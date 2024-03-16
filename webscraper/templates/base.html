@@ -58,7 +58,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link d-flex gap-1" aria-current="page" href="{{ url_for('home') }}">
+                            <a class="nav-link d-flex gap-1" aria-current="page" href="{{ url_for('home') }}"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <span class="fs-5 span-nav">
                                     Extract opinions
                                 </span>
@@ -92,7 +93,7 @@
                         <input class="form-control me-2" type="search" placeholder="Product ID" aria-label="Search"
                             id="productId" name="productid" required data-bs-toggle="tooltip" data-bs-placement="left"
                             data-bs-title="Extract opinions">
-                        <button class="search-button" type="submit" id="navSearchButton">Search</button>
+                        <button class="search-button" type="submit" id="navSearchButton">Extract</button>
                     </form>
                 </div>
             </div>
@@ -132,6 +133,25 @@
         </div>
     </footer>
     {% include 'loading-modal.html' %}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content background-freeze">
+                <div class="modal-header background-freeze">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Extract opinions</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body background-freeze">
+                    <p>Type in the product ID below</p>
+                    <form action="/product" class="d-flex" role="search" id="navSearchForm">
+                        <input class="form-control me-2" type="search" placeholder="Product ID" aria-label="Search"
+                            id="productId" name="productid" data-bs-title="Extract opinions">
+                        <button class="search-button" type="submit" id="navSearchButton">Extract</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
