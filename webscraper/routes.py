@@ -52,7 +52,7 @@ def download():
     file = download_product.download(file_type, productid)
 
     if file is None or isinstance(file, Exception):
-        return render_template("error.html", error=file)
+        return render_template("error.html", exception=file)
 
     return send_file(file, as_attachment=True)
 
