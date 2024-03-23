@@ -3,10 +3,10 @@ from webscraper import (
     scraper,
     download_product,
     sort_opinions,
-    database_handler,
     utils,
 )
 from flask import render_template, request, send_file
+from webscraper.dbmodels import ProductModel
 
 
 @app.route("/")
@@ -25,7 +25,7 @@ def product():
     else:
         productid = args.get("productid")
 
-    database_product = database_handler.get_product(productid)
+    database_product = ProductModel.get_by_id(productid)
 
     if not database_product:
         product = scraper.scrape(productid)
@@ -79,7 +79,7 @@ def charts_data():
 
 @app.route("/product-list", methods=["GET"])
 def product_list():
-    products = database_handler.get_all_products()
+    products = ProductModel.get_all()
     products.reverse()
     return render_template("product-list.html", products=products)
 

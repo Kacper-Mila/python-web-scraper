@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
-from webscraper import database_handler, utils
+from webscraper import utils
+from webscraper.dbmodels import ProductModel, OpinionModel
 
 
 def scrape(productid):
@@ -22,16 +23,14 @@ def scrape(productid):
     img_url = scrape_img_url(soup)
     rating = scrape_rating(soup)
 
-    product = database_handler.Product(
+    product = ProductModel.Product(
         productid=productid, product_name=product_name, img_url=img_url, rating=rating
     )
-    database_handler.add_product_to_database(product)
+    ProductModel.add_to_db(product)
 
     scrape_all_product_opinions(url, productid)
 
-    database_handler.commit_to_database()
-
-    return database_handler.Product.query.get(productid)
+    return ProductModel.get_by_id(productid)
 
 
 def scrape_product_name(soup):
@@ -75,8 +74,7 @@ def scrape_all_product_opinions(url, productid, pros_count=0, cons_count=0):
             )
         except:
             break
-
-    database_handler.get_product(productid).opinions_count = len(product_opinions)
+    ProductModel.get_by_id(productid).opinions_count = len(product_opinions)
 
     for opinion in product_opinions:
         opinion_id = scrape_opionion_id(opinion)
@@ -106,7 +104,7 @@ def scrape_all_product_opinions(url, productid, pros_count=0, cons_count=0):
             pros = None
             cons = None
 
-        opinion = database_handler.Opinion(
+        opinion = OpinionModel.Opinion(
             id=opinion_id,
             author=author,
             recommendation=recommendation,
@@ -121,10 +119,10 @@ def scrape_all_product_opinions(url, productid, pros_count=0, cons_count=0):
             not_helpfull=not_helpfull,
             productid=productid,
         )
-        database_handler.add_opinion_to_database(opinion)
+        OpinionModel.add_to_db(opinion)
 
-    database_handler.get_product(productid).total_pros_count = pros_count
-    database_handler.get_product(productid).total_cons_count = cons_count
+    ProductModel.get_by_id(productid).total_pros_count = pros_count
+    ProductModel.get_by_id(productid).total_cons_count = cons_count
 
 
 def scrape_opionion_id(opinion):

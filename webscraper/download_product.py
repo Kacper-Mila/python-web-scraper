@@ -2,7 +2,7 @@ import csv
 import json
 import openpyxl
 import os
-from webscraper.database_handler import Opinion
+from webscraper.dbmodels.OpinionModel import Opinion
 
 
 def download(file_type, productid):
